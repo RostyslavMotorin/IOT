@@ -50,7 +50,7 @@ namespace iot.Services
                 await client.SendMessage(position.X +":"+ position.Y);
                 System.Console.WriteLine(position.X + " " + position.Y);
                 
-                await Task.Delay(2000);
+                await Task.Delay(1000);
             }
         }
         private Square generateMove(Square position)

@@ -13,10 +13,16 @@ namespace iot
             await Client.Connect();
             MoveService moveService = new MoveService(Client);
             await moveService.Init();
-            
-            await moveService.Move();
+            try
+            {
+                await moveService.Move();
+            }
+            catch (Exception e)
+            {
+                System.Console.WriteLine(e.Message);
+            }
 
-            Console.ReadLine(); 
+            Console.ReadLine();
         }
     }
 }
