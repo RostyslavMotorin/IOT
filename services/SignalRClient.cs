@@ -33,9 +33,10 @@ namespace iot.Services
                 System.Console.WriteLine("connection signalr exeption!");
             }
         }
-        public async Task SendMessage(string message)
+        public async Task SendMessage(string message,string user)
         {
-            await connection.InvokeCoreAsync("SendMessage", args: new[] { message });
+            await connection.InvokeCoreAsync("SendMessage", args: new[] { message,user });
         }
+        
     }
 }

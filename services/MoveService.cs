@@ -14,17 +14,19 @@ namespace iot.Services
         {
             this.client = client;
         }
-        List<Square[]> roomsCoordinates;
-        bool IsOpenConnection = true;
-        Random r = new Random();
-        Square lastPos;
+        private List<Square[]> roomsCoordinates;
+        private bool IsOpenConnection = true;
+        private Random r = new Random();
+        private Square lastPos;
+        private string user;
 
         async public Task Init()
         {
             try
             {
                 GetRequestService getRequestService = new GetRequestService();
-                roomsCoordinates = await getRequestService.GetRequest("CalculationCoordinates/GetCoordinates");
+                roomsCoordinates = await getRequestService.GetRequest<List<Square[]>>("SensorNonCRUD/GetCoordinates");
+                user = await getRequestService.GetRequestAsString("SensorNonCRUD/TakeUserForSensor");
             }
             catch (NullReferenceException e)
             {
@@ -47,8 +49,8 @@ namespace iot.Services
                     await Move();
                     return;
                 }
-                await client.SendMessage(position.X +":"+ position.Y);
-                System.Console.WriteLine(position.X + " " + position.Y);
+                await client.SendMessage(position.X +":"+ position.Y, user);
+                System.Console.WriteLine(position.X + " " + position.Y + " ^^" + user);
                 
                 await Task.Delay(1000);
             }
